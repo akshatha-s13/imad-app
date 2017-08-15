@@ -4,13 +4,66 @@ var path = require('path');
 
 var app = express();
 app.use(morgan('combined'));
+var article1 = {
+   title: 'Article 1 | Akshu',
+    heading: 'My Article',
+    date: 'Good Day',
+    content:`
+            <p>
+                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>`
+           
+};
 
+function createTemplate(data){
+    var title=data.title;
+    var heading=data.heading;
+    var date=data.date;
+    var content=data.content;
+
+var htmlTemplate = `
+    title: 
+    <html>
+    <head>
+        <title>
+           ${title}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="/ui/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="cont">
+            <div>
+                <a href="/">Home</a>
+            </div>
+            <hr/>
+            <h3>
+               ${heading}
+            </h3>
+            <div>
+                ${date}
+            </div>
+            <div>
+                ${content}
+            </div>
+        </div>
+    </body>
+</html>
+`;
+return htmlTemplate;
+}
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 app.get('/article1', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'article1.html'));
+  res.send(createTemplate(article1));
 });
 
 app.get('/article2', function (req, res) {
