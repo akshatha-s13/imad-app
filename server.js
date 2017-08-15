@@ -4,7 +4,7 @@ var path = require('path');
 
 var app = express();
 app.use(morgan('combined'));
-var article1 = {
+var articles = {article1 : {
    title: 'Article 1 | Akshu',
     heading: 'My Article',
     date: 'Good Day',
@@ -17,8 +17,36 @@ var article1 = {
             </p>
             <p>
                     3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>`},
+            article2 :{
+   title: 'Article 2 | Akshu',
+    heading: 'My Article',
+    date: 'Good Day',
+    content:`
+            <p>
+                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>`},
+            article3 :{
+   title: 'Article 3 | Akshu',
+    heading: 'My Article',
+    date: 'Good Day',
+    content:`
+            <p>
+                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
+            </p>
+            <p>
+                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
             </p>`
-           
+            } 
 };
 
 function createTemplate(data){
@@ -62,17 +90,10 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article1', function (req, res) {
-  res.send(createTemplate(article1));
+app.get('/articleName', function (req, res) {
+  res.send(createTemplate(articles[articleName]));
 });
 
-app.get('/article2', function (req, res) {
-  res.send('two');
-});
-
-app.get('/article3', function (req, res) {
-  res.send('three');
-});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
