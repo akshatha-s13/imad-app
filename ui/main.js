@@ -14,3 +14,13 @@ img.onclick=function(){
     var interval=setInterval(moveRight,50);
    // img.style.marginLeft='100px';
 }
+
+var button=document.getElementById('counter');
+var ctr=0;
+button.onclick=function(){
+ctr++;
+var span=document.getElementById('count');
+span.innerHTML=ctr.toString();
+
+    
+}
