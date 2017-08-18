@@ -27,14 +27,10 @@ button.onclick=function(){
 span.innerHTML=ctr.toString();  
     }
     }
-
-
-
-    
 }
 request.open('GET','http://akshathas513.imad.hasura-app.io/counter',true);
 request.send(null);
-};
+}
 
 var nameInput=document.getElementById('name');
 var name=nameInput.value;
