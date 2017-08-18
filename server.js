@@ -94,6 +94,7 @@ app.get('/counter', function (req, res) {
   counter++;
   res.send(counter.toString());
 });
+var names=[];
 
 app.get('/submit-name',function(req,res){
     var name=req.query.name;
@@ -117,7 +118,7 @@ app.get('/ui/main.js', function (req, res) {
 app.get('/ui/madi.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
 });
-var names=[];
+
 
 
 
