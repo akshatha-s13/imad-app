@@ -1,8 +1,6 @@
 console.log('Loaded!');
-var element=document.getElementById('main-text')
-
+var element=document.getElementById('main-text');
 element
-
 element.innerHTML='akkkkshhu';
 var img=document.getElementById('madi');
 marginLeft=0;
@@ -16,7 +14,6 @@ img.onclick=function(){
 }
 
 var button=document.getElementById('counter');
-
 button.onclick=function(){
     var request=new XMLHttpRequest();
     request.onreadystatechange=function(){
