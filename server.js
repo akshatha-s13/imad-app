@@ -5,6 +5,8 @@ var Pool = require('pg').Pool;
 var app = express();
 app.use(morgan('combined'));
 var crypto=require('crypto');
+var bodyParser=require('body-parser');
+app.use(bodyParser.json());
 
 var articles = {'article1' : {
    title: 'Article 1 | Akshu',
@@ -106,17 +108,6 @@ app.get('/counter', function (req, res) {
   res.send(counter.toString());
 });
 
-function hash(input,salt)
-{
-    var hashed=crypto.pbkdf2Sync(input,salt,10000,512,'sha512');
-    return ["pbkdf2",'10000',salt,hashed.toString('hex')].join('$');
-}
-
-app.get('/hash/:input',function(req,res){
-    var hashedString=hash(req.params.input,'this-is-random');
-    res.send(hashedString);
-});
-
 var pool=new Pool(config);
 app.get('/test-db',function(req,res){
     pool.query('SELECT * FROM article',function(err,result){
@@ -128,6 +119,35 @@ app.get('/test-db',function(req,res){
         }
     });
 });
+
+function hash(input,salt)
+{
+    var hashed=crypto.pbkdf2Sync(input,salt,10000,512,'sha512');
+    return ["pbkdf2",'10000',salt,hashed.toString('hex')].join('$');
+}
+
+app.get('/hash/:input',function(req,res){
+    var hashedString=hash(req.params.input,'this-is-random');
+    res.send(hashedString);
+});
+
+app.get('/create-user',function(req,res){
+
+var username=req.body.username;
+var password=req.body.password;
+var salt=crypto.getRandomBytes(128).toString();
+var dbString=hash(password,salt);
+pool.query('INSERT into "user" (username,password) values($1,$2)',[username,dbString],function(err,result){
+        if(err){
+            res.status(500).send(err.toString());
+        }
+        else{
+            res.send('User successfully created :'+username);
+        }
+    });
+})
+
+
 
 var names=[];
 app.get('/submit-name',function(req,res){
