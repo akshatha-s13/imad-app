@@ -50,10 +50,10 @@ var articles = {'article1' : {
 };
 
 var config={
-    user:	akshathas513,
-database:	akshathas513,
-host:db.imad.hasura-app.io,
-port:5432,
+    user:	'akshathas513',
+database:	'akshathas513',
+host:'db.imad.hasura-app.io',
+port:'5432',
 password: process.env.DB_PASSWORD
 };
 
