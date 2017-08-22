@@ -145,32 +145,36 @@ pool.query('INSERT into "user" (username,password) values($1,$2)',[username,dbSt
             res.send('User successfully created :'+username);
         }
     });
-})
+});
 
 app.post('/login',function(req,res){
 
 var username=req.body.username;
 var password=req.body.password;
-pool.query('SELECT from "user" WHERE username=$1',[username],function(err,result){
+pool.query('SELECT * from "user" WHERE username=$1',[username],function(err,result){
         if(err){
             res.status(500).send(err.toString());
         }
         else{
             if(result.rows.length===0)
+            {
                res.send(403).send('Invalid Username/Password');
+            }
             else{
                 var dbstring=result.rows[0].password;
                 var salt=dbstring.split('$')[2];
                 var hashedpassword=hash(password,salt);
-                if(hashedpassword==dbstring)
+                if(hashedpassword===dbstring)
+                {
                   res.send('Credentials Correct :');
-                else
-                res.send('Invalid Password!')
+                }
+                else{
+                res.send(403).send('Invalid Password!')
             }
-            
+            } 
         }
     });
-})
+});
 
 var names=[];
 app.get('/submit-name',function(req,res){
