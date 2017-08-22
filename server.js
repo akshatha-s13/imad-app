@@ -1,15 +1,15 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-var Pool = require('pg').Pool;
-var app = express();
-app.use(morgan('combined'));
 var crypto=require('crypto');
 var bodyParser=require('body-parser');
-app.use(bodyParser.json());
-
+var Pool = require('pg').Pool;
 var session=require('express-session');
-var app=express();
+
+
+var app = express();
+app.use(morgan('combined'));
+app.use(bodyParser.json());
 app.use(session(
     {
     secret: 'someRandom',
