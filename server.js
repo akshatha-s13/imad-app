@@ -9,6 +9,7 @@ var bodyParser=require('body-parser');
 app.use(bodyParser.json());
 
 var session=require('express-session');
+var app=express();
 app.use(session(
     {
     secret: 'someRandom',
