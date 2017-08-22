@@ -9,7 +9,8 @@ var bodyParser=require('body-parser');
 app.use(bodyParser.json());
 
 var session=require('express-session');
-app.use(session({
+app.use(session(
+    {
     secret: 'someRandom',
     cookie:{maxAge: 1000*60*60*24*30}
 
