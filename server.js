@@ -169,7 +169,7 @@ pool.query('SELECT * from "user" WHERE username=$1',[username],function(err,resu
                   res.send('Credentials Correct :');
                 }
                 else{
-                res.send(403).send('Invalid Password!');
+                res.send('Invalid Password!');
             }
             } 
         }
