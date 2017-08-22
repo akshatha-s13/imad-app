@@ -3,6 +3,7 @@
 var submit=document.getElementById('submit_btn');
 submit.onclick=function(){
  var request=new XMLHttpRequest();
+ request.onreadystatechange=function(){
     if(request.readyState==XMLHttpRequest.DONE){
         if(request.status===200){
         alert ('Login successful');}
@@ -12,6 +13,7 @@ submit.onclick=function(){
         alert('Invalid credentials');}
     
     }
+ }
     
     
     var username=document.getElementById('username').value;
