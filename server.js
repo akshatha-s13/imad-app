@@ -19,96 +19,7 @@ app.use(session(
 
 }));
 
-var articles = {'article1' : {
-   title: 'Article 1 | Akshu',
-    heading: 'My Article',
-    date: 'Good Day',
-    content:`
-            <p>
-                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>`},
-            'article2' :{
-   title: 'Article 2 | Akshu',
-    heading: 'My Article',
-    date: 'Good Day',
-    content:`
-            <p>
-                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>`},
-            'article3' :{
-   title: 'Article 3 | Akshu',
-    heading: 'My Article',
-    date: 'Good Day',
-    content:`
-            <p>
-                    1Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    2Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>
-            <p>
-                    3Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.Good days are ahead.
-            </p>`
-            } 
-};
 
-var config={
-    user:	'akshathas513',
-database:	'akshathas513',
-host:'db.imad.hasura-app.io',
-port:'5432',
-password: process.env.DB_PASSWORD
-};
-
-function createTemplate(data){
-    var title=data.title;
-    var heading=data.heading;
-    var date=data.date;
-    var content=data.content;
-
-var htmlTemplate = `
-     
-    <html>
-    <head>
-        <title>
-           ${title}
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="/ui/style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="cont">
-            <div>
-                <a href="/">Home</a>
-            </div>
-            <hr/>
-            <h3>
-               ${heading}
-            </h3>
-            <div>
-                ${date.toDateString()}
-            </div>
-            <div>
-                ${content}
-            </div>
-        </div>
-    </body>
-</html>
-`;
-return htmlTemplate;
-}
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -188,6 +99,19 @@ pool.query('SELECT * from "user" WHERE username=$1',[username],function(err,resu
     });
 });
 
+app.get('/check-login',function(req,res){
+    if(req.session && req.session.auth && req.session.userId)
+       res.send('Logged in :'+ req.session.auth.userId.toString());
+     else
+     res.send('Not Logged in');
+});
+
+app.get('/logout',function(req,res){
+    delete req.session.auth;
+    res.send('Logged out');
+});
+
+
 var names=[];
 app.get('/submit-name',function(req,res){
     var name=req.query.name;
@@ -230,17 +154,7 @@ app.get('/:articleName', function (req, res) {
   res.send(createTemplate(articles[articleName]));
 });
 
-app.get('/check-login',function(req,res){
-    if(req.session && req.session.auth && req.session.userId)
-       res.send('Logged in :'+req.session.auth.userId.toString());
-     else
-     res.send('Not Logged in');
-});
 
-app.get('/logout',function(req,res){
-    delete req.session.auth;
-    res.send('Logged out');
-});
 // Do not change port, otherwise your app won't run on IMAD servers
 // Use 8080 only for local development if you already have apache running on 80
 var port = 80;
