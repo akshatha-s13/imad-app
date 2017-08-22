@@ -229,15 +229,17 @@ app.get('/:articleName', function (req, res) {
     var articleName=req.params.articleName;
   res.send(createTemplate(articles[articleName]));
 });
-app.get('/logout',function(req,res){
-    delete req.session.auth;
-    res.send('Logged out');
-});
+
 app.get('/check-login',function(req,res){
     if(req.session && req.session.auth && req.session.userId)
        res.send('Logged in :'+req.session.auth.userId.toString());
      else
      res.send('Not Logged in');
+});
+
+app.get('/logout',function(req,res){
+    delete req.session.auth;
+    res.send('Logged out');
 });
 // Do not change port, otherwise your app won't run on IMAD servers
 // Use 8080 only for local development if you already have apache running on 80
