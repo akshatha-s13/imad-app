@@ -4,12 +4,12 @@ var submit=document.getElementById('submit_btn');
 submit.onclick=function(){
  var request=new XMLHttpRequest();
     if(request.readyState==XMLHttpRequest.DONE){
-        if(request.status==200)
-        alert ('Login successful');
-        else if(request.status==500)
-        alert('Something went wrong');
-        else if(request.status==403)
-        alert('Invalid credentials');
+        if(request.status===200){
+        alert ('Login successful');}
+        else if(request.status===500){
+        alert('Something went wrong');}
+        else if(request.status===403){
+        alert('Invalid credentials');}
     
     }
     
